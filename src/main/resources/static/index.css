@@ -1,0 +1,9 @@
+.ANSWERED {
+    color: darkgreen;
+}
+.NO_ANSWER {
+    color:red;
+}
+.HANGUP {
+    color: orange;
+}

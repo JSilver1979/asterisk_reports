@@ -46,20 +46,49 @@
                 </div>
             </div>
         </div>
-        <div>
-            <label>Номер группы<input type="text" ng-model="newDate.group"></label>
-        </div>
         <button class="btn btn-warning" type="submit">Поиск</button>
     </form>
-    <h3>Отчет по звонкам</h3>
+    <h3>Отчет по выбранным датам</h3>
     <table class="table table-hover">
         <tr>
-            <td><b>Дата и время звонка</b></td>
-            <td><b>Входящий номер</b></td>
-            <td><b>Группа звонка</b></td>
-            <td><b>Время ответа оператора</b></td>
-            <td><b>Время разговора с оператором</b></td>
-            <td><b>Итоговый статус</b></td>
+            <td>Кол-во отвеченных</td>
+            <td>{{Stats.answeredCount}}</td>
+        </tr>
+        <tr>
+            <td>Кол-во не дождавшихся в очереди</td>
+            <td>{{Stats.queuedDropCallsCount}}</td>
+        </tr>
+        <tr>
+            <td>Кол-во пропущенных очередью</td>
+            <td>{{Stats.nonAnsweredByQueueCount}}</td>
+        </tr>
+        <tr>
+            <td>Кол-во звонков со статусом "Занято"</td>
+            <td>{{Stats.busyCallCount}}</td>
+        </tr>
+        <tr>
+            <td>Кол-во пропущенных операторами</td>
+            <td>{{Stats.nonAnsweredByOperatorsCount}}</td>
+        </tr>
+        <tr>
+            <td>Всего пропущенных звонков</td>
+            <td>{{Stats.totalNonAnsweredCalls}}</td>
+        </tr>
+        <tr>
+            <td>Всего звонков</td>
+            <td>{{Stats.totalCalls}}</td>
+        </tr>
+        <tr>
+        </tr>
+    </table>
+    <table class="table table-hover">
+        <tr>
+            <td><b>Start DateTime</b></td>
+            <td><b>CallNumber</b></td>
+            <td><b>Operators Group</b></td>
+            <td><b>Operator Answer Time</b></td>
+            <td><b>Operator Answer Duration</b></td>
+            <td><b>Call Status</b></td>
         </tr>
         <tr ng-repeat="item in CallsList">
             <td>{{item.callDate}} {{item.callTime}}</td>

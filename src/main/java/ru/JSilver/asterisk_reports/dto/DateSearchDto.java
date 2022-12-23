@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class DateSearchDto {
     private String dateFrom;
     private String dateTo;
+    private String group;
 }
