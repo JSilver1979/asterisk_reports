@@ -1,15 +1,16 @@
-package ru.JSilver.asterisk_reports.services;
+package ru.JSilver.asterisk.reports.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.JSilver.asterisk_reports.data.RawRow;
-import ru.JSilver.asterisk_reports.dto.CallHistoryDto;
-import ru.JSilver.asterisk_reports.dto.CallItemDto;
-import ru.JSilver.asterisk_reports.repos.RawRowRepository;
+import ru.JSilver.asterisk.reports.data.RawRow;
+import ru.JSilver.asterisk.reports.dto.CallHistoryDto;
+import ru.JSilver.asterisk.reports.dto.CallItemDto;
+import ru.JSilver.asterisk.reports.repos.RawRowRepository;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 

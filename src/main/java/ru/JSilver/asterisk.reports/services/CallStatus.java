@@ -1,4 +1,4 @@
-package ru.JSilver.asterisk_reports.services;
+package ru.JSilver.asterisk.reports.services;
 
 public enum CallStatus {
     ANSWERED,

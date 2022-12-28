@@ -8,12 +8,12 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ru.JSilver</groupId>
-	<artifactId>asterisk_reports</artifactId>
+	<groupId>ru.JSilver.asterisk</groupId>
+	<artifactId>reports</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>asterisk_reports</name>
+    <name>asterisk_reports</name>
 	<description>test project for Asterisk data</description>
-	<properties>
+    <properties>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>

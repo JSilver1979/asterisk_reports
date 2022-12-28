@@ -1,4 +1,4 @@
-package ru.JSilver.asterisk_reports;
+package ru.JSilver.asterisk.reports;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

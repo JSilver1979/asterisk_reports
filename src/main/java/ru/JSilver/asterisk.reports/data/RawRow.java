@@ -1,10 +1,9 @@
-package ru.JSilver.asterisk_reports.data;
+package ru.JSilver.asterisk.reports.data;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Entity

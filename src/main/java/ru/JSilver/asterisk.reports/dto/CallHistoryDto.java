@@ -1,4 +1,4 @@
-package ru.JSilver.asterisk_reports.dto;
+package ru.JSilver.asterisk.reports.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

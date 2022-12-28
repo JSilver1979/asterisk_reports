@@ -1,4 +1,4 @@
-package ru.JSilver.asterisk_reports.dto;
+package ru.JSilver.asterisk.reports.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NativeStatsDto {
-
+public class StatisticDto {
     Integer answeredCount = 0;
     Integer nonAnsweredByOperatorsCount = 0;
     Integer nonAnsweredByQueueCount = 0;
@@ -23,5 +22,4 @@ public class NativeStatsDto {
                 + queuedDropCallsCount
                 + busyCallCount;
     }
-
 }

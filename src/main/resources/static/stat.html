@@ -13,13 +13,25 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="report.js"></script>
-    <title>Статистика звонков на ресепшн</title>
+    <title>Сводная статистика звонков</title>
 </head>
 <body>
 <div class="container" ng-controller="indexController">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Статистика ежедневных звонков</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="stat.html">Сводная статистика за период</a>
+                </li>
+                </ul>
+        </div>
+    </nav>
     <h3>Статистика звонков на ресепшн</h3>
     <h4>Выберите дату начала и дату окончания для отчета</h4>
-    <form ng-submit="search()">
+    <form ng-submit="searchStats()">
         <div class="row form-group">
             <label for="date" class="col-sm-1 col-form-label">Дата начала</label>
             <div class="col-sm-4">
@@ -44,6 +56,20 @@
                             </span>
                         </span>
                 </div>
+            </div>
+            <label for="groupSelector">Номер группы</label>
+            <div class="col-sm-4">
+                <select class="form-control form-control-sm" ng-model="newDate.group" id="groupSelector">
+                    <option value="1111">1111 - Техническая поддержка ИТ</option>
+                    <option value="1112">1112 - Ресепшн</option>
+                    <option value="1113">1113 - Управление по связям в общественностью</option>
+                    <option value="1114">1114 - Department of Additional Profession</option>
+                    <option value="1115">1115 - Department of Educational Programs</option>
+                    <option value="1116">1116 - Department of Additional Profession</option>
+                    <option value="1117">1117 - Department of Additional Profession</option>
+                    <option value="1120">1120 - Управление по подбору персонала</option>
+                    <option value="1122">1122 - Секретариат Минская</option>
+                </select>
             </div>
         </div>
         <button class="btn btn-warning" type="submit">Поиск</button>
@@ -79,24 +105,6 @@
             <td>{{Stats.totalCalls}}</td>
         </tr>
         <tr>
-        </tr>
-    </table>
-    <table class="table table-hover">
-        <tr>
-            <td><b>Start DateTime</b></td>
-            <td><b>CallNumber</b></td>
-            <td><b>Operators Group</b></td>
-            <td><b>Operator Answer Time</b></td>
-            <td><b>Operator Answer Duration</b></td>
-            <td><b>Call Status</b></td>
-        </tr>
-        <tr ng-repeat="item in CallsList">
-            <td>{{item.callDate}} {{item.callTime}}</td>
-            <td><a href="http://10.1.5.130/admin/config.php?display=cdr&action=cel_show&uid={{item.callId}}">{{item.callNumber}}</a></td>
-            <td>{{item.operatorsGroup}}</td>
-            <td>{{item.operatorAnswerDate}} {{item.operatorAnswerTime}}</td>
-            <td>{{item.operatorAnswerDuration}}</td>
-            <td><span class="{{item.finalStatus}}">{{item.finalStatus}}</span></td>
         </tr>
     </table>
 </div>
