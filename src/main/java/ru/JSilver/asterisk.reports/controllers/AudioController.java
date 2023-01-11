@@ -3,10 +3,8 @@ package ru.JSilver.asterisk.reports.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +30,7 @@ public class AudioController {
     @Value("${audioserver}")
     private String audioServer;
 
-    @GetMapping("/{fileName}")
+    @GetMapping(value = "/{fileName}")
     public ResponseEntity<?> playAudio(@PathVariable String fileName) throws FileNotFoundException {
         String[] fileArray = fileName.split("-");
         if (fileArray.length > 4) {
@@ -45,6 +43,7 @@ public class AudioController {
             InputStreamResource isr = new InputStreamResource(new FileInputStream(file));
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentLength(length);
+            httpHeaders.setContentType(MediaType.valueOf("audio/wav"));
             httpHeaders.setCacheControl(CacheControl.noCache().getHeaderValue());
             return new ResponseEntity<>(isr, httpHeaders, HttpStatus.OK);
         }

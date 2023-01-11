@@ -36,7 +36,6 @@ public class CallsService {
                     rawItems.get(i).getLastApp(),
                     rawItems.get(i).getDisposition()
             );
-
             if (!callMap.isEmpty() && callMap.containsKey(rawItems.get(i).getLinkedId())) {
                 CallItemDto callItem = callMap.get(rawItems.get(i).getLinkedId());
                 callItem.getCallHistory().put(rawItems.get(i).getSequence(), callHistoryDto);
@@ -77,11 +76,12 @@ public class CallsService {
                 }
             }
         }
-        return callMap.values()
+        List<CallItemDto>  dtoList = callMap.values()
                 .stream()
                 .filter(callItemDto -> callItemDto.getOperatorsGroup().equals(group))
                 .sorted(Comparator.comparing(CallItemDto::getSequence))
                 .collect(Collectors.toList());
+        return dtoList;
     }
 
     private Map<Long, CallHistoryDto> createHistoryDtoMap(Long key, CallHistoryDto historyDto) {
