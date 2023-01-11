@@ -14,4 +14,5 @@ public class CallHistoryDto {
     private Integer callDuration;
     private String lastApp;
     private String status;
+    private String callGroup;
 }
