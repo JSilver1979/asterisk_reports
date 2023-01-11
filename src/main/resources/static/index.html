@@ -80,7 +80,7 @@
             <td>{{item.operatorAnswerDate}} {{item.operatorAnswerTime}}</td>
             <td>{{item.operatorAnswerDuration}}</td>
             <td>
-                <div ng-if="item.finalStatus=='ANSWERED'"><a href="http://10.1.5.105:8080/audio/{{item.recordingFile}}">D...</a>
+                <div ng-if="item.finalStatus=='ANSWERED'">
                     <audio controls>
                         <source src="http://10.1.5.105:8080/audio/{{item.recordingFile}}" type="audio/wav">
                         <a href="http://10.1.5.105:8080/audio/{{item.recordingFile}}">D...</a>
