@@ -11,5 +11,4 @@ import java.util.List;
 public interface RawRowRepository extends JpaRepository<RawRow, Long> {
 
     List<RawRow> findAllByCallDateTimeBetween(LocalDateTime from, LocalDateTime to);
-
 }

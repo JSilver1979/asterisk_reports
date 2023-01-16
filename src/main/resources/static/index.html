@@ -71,7 +71,7 @@
             <td><b>Входящий номер</b></td>
 <!--            <td><b>Группа звонка</b></td>-->
             <td><b>Время ответа оператора</b></td>
-            <td><b>Время разговора с оператором</b></td>
+            <td><b>Длительность звонка</b></td>
             <td><b>Итоговый статус</b></td>
         </tr>
         <tr ng-repeat="item in CallsList">
@@ -87,7 +87,8 @@
                         <a href="http://10.1.5.105:8080/audio/{{item.recordingFile}}">D...</a>
                     </audio>
                 </div>
-                <div ng-if="item.finalStatus!='ANSWERED'"><span class="{{item.finalStatus}}">{{item.finalStatus}}</span></div>
+                <div ng-if="item.finalStatus=='NO ANSWER BY OPERATOR'"><span class="NO_ANSWER">{{item.finalStatus}}</span></div>
+                <div ng-if="item.finalStatus=='NO ANSWER BY QUEUE'"><span class="HANGUP">{{item.finalStatus}}</span></div>
             </td>
         </tr>
     </table>

@@ -3,7 +3,7 @@ angular.module('app',[]).controller('indexController', function ($scope, $http) 
     // const contextPath = 'http://10.1.5.105:8080/report'
 
     $scope.search = function () {
-        $http.post(contextPath + '/calls_search', $scope.newDate)
+        $http.post(contextPath + '/calls', $scope.newDate)
             .then(function (response){
                 $scope.CallsList = response.data;
             });
