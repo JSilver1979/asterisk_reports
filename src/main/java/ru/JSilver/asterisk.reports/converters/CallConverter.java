@@ -33,11 +33,11 @@ public class CallConverter {
             return "ANSWERED";
         }
         else if (statuses.contains("ANSWERED") && rowNumber <= 1) {
-            return "NO ANSWER BY QUEUE";
+            return "Сброшено в очереди";
         }
         else if (statuses.contains("NO ANSWER")) {
-            return "NO ANSWER BY OPERATOR";
+            return "Не отвечено оператором";
         }
-        return "UNKNOWN STATUS";
+        return "НЕИЗВЕСТНЫЙ СТАТУС";
     }
 }
