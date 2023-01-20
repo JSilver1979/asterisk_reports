@@ -71,14 +71,16 @@
             <td><b>Входящий номер</b></td>
 <!--            <td><b>Группа звонка</b></td>-->
             <td><b>Время перевода на оператора</b></td>
+            <td><b>Время ожидания</b></td>
             <td><b>Длительность звонка</b></td>
             <td><b>Итоговый статус</b></td>
         </tr>
         <tr ng-repeat="item in CallsList">
             <td>{{item.callDate}} {{item.callTime}}</td>
-            <td><a target="_blank" href="http://10.1.5.110/admin/config.php?display=cdr&action=cel_show&uid={{item.callId}}">{{item.callNumber}}</a></td>
+            <td><a target="_blank" href="http://10.1.5.110/admin/config.php?display=cdr&action=cel_show&uid={{item.linkedId}}">{{item.callNumber}}</a></td>
 <!--            <td>{{item.operatorsGroup}}</td>-->
             <td>{{item.operatorAnswerDate}} {{item.operatorAnswerTime}}</td>
+            <td>{{item.callWaitingTime}}</td>
             <td>{{item.operatorAnswerDuration}}</td>
             <td>
                 <div ng-if="item.finalStatus=='ANSWERED'">

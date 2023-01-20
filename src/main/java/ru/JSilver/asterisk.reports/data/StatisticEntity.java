@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NamedNativeQuery(name = "NewStatisticEntity.getCallsForStats",
+@NamedNativeQuery(name = "StatisticEntity.getCallsForStats",
         query = "SELECT " +
                 "group_concat(distinct dst) as destination, " +
                 "group_concat(distinct disposition separator ';') as statuses, " +
@@ -17,9 +17,9 @@ import javax.persistence.*;
                 "WHERE LENGTH(src) > 4 " +
                 "and DATE(calldate) BETWEEN ? and ? " +
                 "group by linkedid having destination like ?;",
-        resultSetMapping = "newStatisticEntitySet")
-@SqlResultSetMapping(name = "newStatisticEntitySet",
-        classes = @ConstructorResult(targetClass = NewStatisticEntity.class,
+        resultSetMapping = "statisticEntitySet")
+@SqlResultSetMapping(name = "statisticEntitySet",
+        classes = @ConstructorResult(targetClass = StatisticEntity.class,
                 columns = {
                         @ColumnResult(name = "linkedid", type = String.class),
                         @ColumnResult(name = "destination", type = String.class),
@@ -33,7 +33,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cdr")
-public class NewStatisticEntity {
+public class StatisticEntity {
 
     @Id
     @Column(name = "linkedid")

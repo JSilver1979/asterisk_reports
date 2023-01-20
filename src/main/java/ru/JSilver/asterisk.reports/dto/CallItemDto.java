@@ -3,17 +3,16 @@ package ru.JSilver.asterisk.reports.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Map;
 
 
 public class CallItemDto {
     private Long sequence;
     private String callNumber;
-    private String callId;
+    private String linkedId;
     private String operatorsGroup;
-    private Map<Long, CallHistoryDto> callHistory;
     private LocalDate callDate;
     private LocalTime callTime;
+    private LocalTime callWaitingTime;
     private String finalStatus;
     private LocalDate operatorAnswerDate;
     private LocalTime operatorAnswerTime;
@@ -21,21 +20,6 @@ public class CallItemDto {
     private String recordingFile;
 
     public CallItemDto() {
-    }
-
-    public CallItemDto(Long sequence, String callNumber, String callId, String operatorsGroup, Map<Long, CallHistoryDto> callHistory, LocalDate callDate, LocalTime callTime, String finalStatus, LocalDate operatorAnswerDate, LocalTime operatorAnswerTime, LocalTime operatorAnswerDuration, String recordingFile) {
-        this.sequence = sequence;
-        this.callNumber = callNumber;
-        this.callId = callId;
-        this.operatorsGroup = operatorsGroup;
-        this.callHistory = callHistory;
-        this.callDate = callDate;
-        this.callTime = callTime;
-        this.finalStatus = finalStatus;
-        this.operatorAnswerDate = operatorAnswerDate;
-        this.operatorAnswerTime = operatorAnswerTime;
-        this.operatorAnswerDuration = operatorAnswerDuration;
-        this.recordingFile = recordingFile;
     }
 
     public Long getSequence() {
@@ -54,12 +38,12 @@ public class CallItemDto {
         this.callNumber = callNumber;
     }
 
-    public String getCallId() {
-        return callId;
+    public String getLinkedId() {
+        return linkedId;
     }
 
-    public void setCallId(String callId) {
-        this.callId = callId;
+    public void setLinkedId(String linkedId) {
+        this.linkedId = linkedId;
     }
 
     public String getOperatorsGroup() {
@@ -68,14 +52,6 @@ public class CallItemDto {
 
     public void setOperatorsGroup(String operatorsGroup) {
         this.operatorsGroup = operatorsGroup;
-    }
-
-    public Map<Long, CallHistoryDto> getCallHistory() {
-        return callHistory;
-    }
-
-    public void setCallHistory(Map<Long, CallHistoryDto> callHistory) {
-        this.callHistory = callHistory;
     }
 
     public LocalDate getCallDate() {
@@ -132,5 +108,13 @@ public class CallItemDto {
 
     public void setRecordingFile(String recordingFile) {
         this.recordingFile = recordingFile;
+    }
+
+    public LocalTime getCallWaitingTime() {
+        return callWaitingTime;
+    }
+
+    public void setCallWaitingTime(LocalTime callWaitingTime) {
+        this.callWaitingTime = callWaitingTime;
     }
 }

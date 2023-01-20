@@ -3,7 +3,7 @@ package ru.JSilver.asterisk.reports.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.JSilver.asterisk.reports.data.NewStatisticEntity;
+import ru.JSilver.asterisk.reports.data.StatisticEntity;
 import ru.JSilver.asterisk.reports.dto.StatisticDto;
 import ru.JSilver.asterisk.reports.repos.NewStatisticRepository;
 
@@ -18,8 +18,8 @@ public class StatisticService {
 
     public StatisticDto newStatisticEntityList (String fromDate, String toDate, String group) {
         StatisticDto stats = new StatisticDto();
-        List<NewStatisticEntity> entities = newStatsRepo.getCallsForStats(fromDate, toDate, "%" + group + "%");
-        for (NewStatisticEntity entity: entities) {
+        List<StatisticEntity> entities = newStatsRepo.getCallsForStats(fromDate, toDate, "%" + group + "%");
+        for (StatisticEntity entity: entities) {
             stats.setTotalCalls(stats.getTotalCalls() + 1);
             if (entity.getStatuses().contains("ANSWERED") && entity.getRowsNumber() > 1) {
                 stats.setAnsweredCount(stats.getAnsweredCount() + 1);

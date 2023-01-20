@@ -22,4 +22,5 @@ public class CallDto {
     private String finalStatus;
     private LocalTime operatorAnswerDuration;
     private String recordingFile;
+    private LocalTime callWaitingTime;
 }
