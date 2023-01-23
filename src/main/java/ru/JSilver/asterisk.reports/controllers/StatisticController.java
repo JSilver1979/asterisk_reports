@@ -9,14 +9,16 @@ import ru.JSilver.asterisk.reports.dto.DateSearchDto;
 import ru.JSilver.asterisk.reports.dto.StatisticDto;
 import ru.JSilver.asterisk.reports.services.StatisticService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/stats")
 @RequiredArgsConstructor
 public class StatisticController {
     private final StatisticService statisticService;
 
-    @PostMapping()
-    public StatisticDto getStatistics(@RequestBody DateSearchDto searchDto) {
-        return statisticService.collectStatistic(searchDto.getDateFrom(), searchDto.getDateTo(), searchDto.getGroup());
+    @PostMapping("/v2")
+    public StatisticDto getNewStats(@RequestBody DateSearchDto searchDto) {
+        return statisticService.newStatisticEntityList(searchDto.getDateFrom(), searchDto.getDateTo(), searchDto.getGroup());
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "cdr")
 @Data
-public class RawRow {
+public class RowEntity {
 
     @Id
     @Column(name = "sequence")
