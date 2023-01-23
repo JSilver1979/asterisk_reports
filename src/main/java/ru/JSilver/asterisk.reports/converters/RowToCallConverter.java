@@ -58,8 +58,15 @@ public class RowToCallConverter {
 
         } else if (row.getDisposition().equals("ANSWERED")) {
             callItemDto.setFinalStatus(CallStatus.ANSWERED.getStatus());
-            callItemDto.setOperatorAnswerDuration(
-                    LocalTime.MIN.plusSeconds(row.getDuration()));
+            if(row.getLastApp().equals("Dial")) {
+                if(callItemDto.getOperatorAnswerDuration() == null) {
+                    callItemDto.setOperatorAnswerDuration(
+                            LocalTime.MIN.plusSeconds(row.getDuration()));
+                } else {
+                    callItemDto.setOperatorAnswerDuration(
+                            callItemDto.getOperatorAnswerDuration().plusSeconds(row.getDuration()));
+                }
+            }
         }
 
         return callItemDto;
