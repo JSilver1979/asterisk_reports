@@ -13,7 +13,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="report.js"></script>
-    <title>Статистика звонков на ресепшн</title>
+    <title>Сводная статистика звонков</title>
 </head>
 <body>
 <div class="container" ng-controller="indexController">
@@ -32,24 +32,37 @@
             </ul>
         </div>
     </nav>
-    <h3>Статистика звонков на ресепшн</h3>
-    <h4>Выберите дату для отчета и номер группы</h4>
-    <form ng-submit="search()">
+    <h3>Выгрузка отчетов по звонкам</h3>
+    <h4>Выберите дату начала и дату окончания для отчета</h4>
+    <form ng-submit="downloadReports()">
         <div class="row form-group">
-            <label>Дата начала</label>
+            <label for="date" class="col-sm-1 col-form-label">Дата начала</label>
             <div class="col-sm-4">
                 <div class="input-group date" id="from" >
-                    <input type="text" class="form-control" ng-model="newDate.dateFrom">
+                    <input type="text" class="form-control" ng-model="newReport.dateFrom">
                     <span class="input-group-append">
-                        <span class="input-group-text bg-white">
-                            <i class="fa fa-calendar"></i>
+                            <span class="input-group-text bg-white">
+                                <i class="fa fa-calendar"></i>
+                            </span>
                         </span>
-                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="date" class="col-sm-1 col-form-label">Дата окончания</label>
+            <div class="col-sm-4">
+                <div class="input-group date" id="to" >
+                    <input type="text" class="form-control" ng-model="newReport.dateTo">
+                    <span class="input-group-append">
+                            <span class="input-group-text bg-white">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
                 </div>
             </div>
             <label for="groupSelector">Номер группы</label>
             <div class="col-sm-4">
-                <select class="form-control form-control-sm" ng-model="newDate.group" id="groupSelector">
+                <select class="form-control form-control-sm" ng-model="newReport.group" id="groupSelector">
                     <option value="1111">1111 - Техническая поддержка ИТ</option>
                     <option value="1112">1112 - Ресепшн</option>
                     <option value="1113">1113 - Управление по связям в общественностью</option>
@@ -61,47 +74,15 @@
                     <option value="1122">1122 - Секретариат Минская</option>
                 </select>
             </div>
-            <div>
-                <button class="btn btn-primary" type="submit">Поиск</button>
-            </div>
         </div>
-
+        <button class="btn btn-warning" type="submit">Выгрузить отчет</button>
     </form>
-    <h3>Отчет по звонкам {{CallsList.length}}</h3>
-    <table class="table table-hover">
-        <tr>
-            <td><b>Дата и время звонка</b></td>
-            <td><b>Входящий номер</b></td>
-<!--            <td><b>Группа звонка</b></td>-->
-            <td><b>Время перевода на оператора</b></td>
-            <td><b>Время ожидания</b></td>
-            <td><b>Длительность звонка</b></td>
-            <td><b>Итоговый статус</b></td>
-        </tr>
-        <tr ng-repeat="item in CallsList">
-            <td>{{item.callDate}} {{item.callTime}}</td>
-            <td><a target="_blank" href="http://10.1.5.110/admin/config.php?display=cdr&action=cel_show&uid={{item.linkedId}}">{{item.callNumber}}</a></td>
-<!--            <td>{{item.operatorsGroup}}</td>-->
-            <td>{{item.operatorAnswerDate}} {{item.operatorAnswerTime}}</td>
-            <td>{{item.callWaitingTime}}</td>
-            <td>{{item.operatorAnswerDuration}}</td>
-            <td>
-                <div ng-if="item.finalStatus=='ANSWERED'">
-                    <audio controls>
-                        <source src="http://10.1.5.105:8080/audio/{{item.recordingFile}}" type="audio/wav">
-                        <a href="http://10.1.5.105:8080/audio/{{item.recordingFile}}">D...</a>
-                    </audio>
-                </div>
-                <div ng-if="item.finalStatus=='Не отвечено оператором'"><span class="NO_ANSWER">{{item.finalStatus}}</span></div>
-                <div ng-if="item.finalStatus=='Сброшено в очереди'"><span class="HANGUP">{{item.finalStatus}}</span></div>
-            </td>
-        </tr>
-    </table>
-</div>
-
 <script type="text/javascript">
     $(function() {
         $('#from').datepicker({
+            format: "yyyy-mm-dd"
+        });
+        $('#to').datepicker({
             format: "yyyy-mm-dd"
         });
     });

@@ -117,4 +117,22 @@ public class CallItemDto {
     public void setCallWaitingTime(LocalTime callWaitingTime) {
         this.callWaitingTime = callWaitingTime;
     }
+
+    @Override
+    public String toString() {
+        String delimiter = ";";
+
+        return sequence.toString() + delimiter +
+                callNumber + delimiter +
+                linkedId + delimiter +
+                operatorsGroup + delimiter +
+                (callDate != null ? callDate.toString() : "") + delimiter +
+                (callTime != null ? callTime.toString() : "") + delimiter +
+                (callWaitingTime != null ? callWaitingTime.toString() : "") + delimiter +
+                finalStatus + delimiter +
+                (operatorAnswerDate != null ? operatorAnswerDate.toString() : "") + delimiter +
+                (operatorAnswerTime != null ? operatorAnswerTime.toString() : "") + delimiter +
+                (operatorAnswerDuration != null ? operatorAnswerDuration.toString() : "") + delimiter +
+                recordingFile;
+    }
 }

@@ -26,7 +26,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="stat.html">Сводная статистика за период</a>
                 </li>
-                </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">Выгрузка отчетов</a>
+                </li>
+            </ul>
         </div>
     </nav>
     <h3>Статистика звонков на ресепшн</h3>
@@ -75,6 +78,7 @@
         <button class="btn btn-warning" type="submit">Поиск</button>
     </form>
     <h3>Отчет по выбранным датам</h3>
+    <a ng-href="http://localhost:8080/file/testfile/{{newDate.dateFrom}}" type="text/csv" download="">get file</a>
     <table class="table table-hover">
         <tr>
             <td>Кол-во отвеченных</td>
