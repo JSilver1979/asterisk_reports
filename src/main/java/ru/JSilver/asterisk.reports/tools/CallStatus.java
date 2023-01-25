@@ -2,9 +2,9 @@ package ru.JSilver.asterisk.reports.tools;
 
 public enum CallStatus {
     ANSWERED ("ANSWERED"),
-    NO_ANSWER_BY_QUEUE ("Сброшено в очереди"),
-    NO_ANSWER_BY_OPERATOR ("Не отвечено оператором"),
-    UNKNOWN_STATUS ("Неизвестный статус")
+    NO_ANSWER_BY_QUEUE ("NO ANSWERED BY QUEUE"),
+    NO_ANSWER_BY_OPERATOR ("NO ANSWERED BY OPERATOR"),
+    UNKNOWN_STATUS ("UNKNOWN STATUS")
     ;
 
     private final String status;

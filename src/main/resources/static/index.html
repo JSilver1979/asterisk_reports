@@ -92,8 +92,9 @@
                         <a href="http://10.1.5.105:8080/audio/{{item.recordingFile}}">D...</a>
                     </audio>
                 </div>
-                <div ng-if="item.finalStatus=='Не отвечено оператором'"><span class="NO_ANSWER">{{item.finalStatus}}</span></div>
-                <div ng-if="item.finalStatus=='Сброшено в очереди'"><span class="HANGUP">{{item.finalStatus}}</span></div>
+                <div ng-if="item.finalStatus=='NO ANSWERED BY OPERATOR'"><span class="NO_ANSWER">Не отвечено оператором</span></div>
+                <div ng-if="item.finalStatus=='NO ANSWERED BY QUEUE'"><span class="HANGUP">Сброшено в очереди</span></div>
+                <div ng-if="item.finalStatus=='UNKNOWN STATUS'"><span class="NO_ANSWER">Неизвестный статус</span></div>
             </td>
         </tr>
     </table>

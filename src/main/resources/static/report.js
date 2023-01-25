@@ -26,7 +26,7 @@ angular.module('app',[]).controller('indexController', function ($scope, $http) 
     $scope.downloadReports = function () {
         $http.post(contextPath + '/file/get_report', $scope.newReport)
             .then(function (response) {
-                let file = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]),response.data], {type: 'text/csv'});
+                let file = new Blob([response.data], {type: 'text/csv'});
                 let url = window.URL || window.webkitURL;
                 let downloadLink = angular.element('<a></a>');
                 let filename = $scope.newReport.dateFrom + '_' + $scope.newReport.dateTo + '_' + $scope.newReport.group + '.csv';
