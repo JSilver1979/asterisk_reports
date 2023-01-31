@@ -11,4 +11,6 @@ public class DateSearchDto {
     private String dateFrom;
     private String dateTo;
     private String group;
+    private int year;
+    private int month;
 }

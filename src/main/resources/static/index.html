@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="report.js"></script>
+    <script src="report_new.js"></script>
     <title>Статистика звонков на ресепшн</title>
 </head>
 <body>
@@ -29,10 +29,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="reports.html">Выгрузка отчетов</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://10.1.5.105:8081/index.html" style="color: cornflowerblue">Старая бд</a>
+                </li>
             </ul>
         </div>
     </nav>
-    <h3>Статистика звонков на ресепшн</h3>
+    <h3>Статистика ежедневных звонков</h3>
+<!--    <h5 style="color: #dc0101">Старая БД. Здесь данные только до 11.11.2022</h5>-->
     <h4>Выберите дату для отчета и номер группы</h4>
     <form ng-submit="search()">
         <div class="row form-group">

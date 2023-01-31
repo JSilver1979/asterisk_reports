@@ -9,7 +9,8 @@ import ru.JSilver.asterisk.reports.dto.DateSearchDto;
 import ru.JSilver.asterisk.reports.dto.StatisticDto;
 import ru.JSilver.asterisk.reports.services.StatisticService;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/stats")
@@ -19,6 +20,8 @@ public class StatisticController {
 
     @PostMapping("/v2")
     public StatisticDto getNewStats(@RequestBody DateSearchDto searchDto) {
-        return statisticService.newStatisticEntityList(searchDto.getDateFrom(), searchDto.getDateTo(), searchDto.getGroup());
+        LocalDateTime searchFromDate = LocalDateTime.parse(searchDto.getDateFrom() + "T00:00:01", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime searchToDate = LocalDateTime.parse(searchDto.getDateTo() + "T23:59:59", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        return statisticService.getTrueStats(searchFromDate, searchToDate, searchDto.getGroup());
     }
 }

@@ -18,7 +18,7 @@ public class FileController {
 
     @PostMapping("/get_report")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestBody DateSearchDto searchDto) {
-        byte[] buf = downloadService.getSomeData(searchDto.getDateFrom(), searchDto.getDateTo(), searchDto.getGroup()).getBytes();
+        byte[] buf = downloadService.getSomeData(searchDto.getYear(), searchDto.getMonth(), searchDto.getGroup()).getBytes();
 
         InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(buf));
         HttpHeaders httpHeaders = new HttpHeaders();

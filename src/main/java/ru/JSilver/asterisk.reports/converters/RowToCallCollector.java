@@ -1,11 +1,13 @@
 package ru.JSilver.asterisk.reports.converters;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.JSilver.asterisk.reports.data.RowEntity;
 import ru.JSilver.asterisk.reports.dto.CallItemDto;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,7 +20,7 @@ public class RowToCallCollector {
     private final RowToCallConverter rowConverter;
 
     public List<CallItemDto> collectRowsToCall(List<RowEntity> rowList, String group) {
-        callMap.clear();
+        if (callMap != null) callMap.clear();
 
         for (int i = 0; i < rowList.size(); i++) {
             if (rowList.get(i).getSrc().length() < 5) {

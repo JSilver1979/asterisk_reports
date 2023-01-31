@@ -29,7 +29,7 @@ angular.module('app',[]).controller('indexController', function ($scope, $http) 
                 let file = new Blob([response.data], {type: 'text/csv'});
                 let url = window.URL || window.webkitURL;
                 let downloadLink = angular.element('<a></a>');
-                let filename = $scope.newReport.dateFrom + '_' + $scope.newReport.dateTo + '_' + $scope.newReport.group + '.csv';
+                let filename = $scope.newReport.year + '_' + $scope.newReport.month + '_' + $scope.newReport.group + '.csv';
                 downloadLink.attr('href', url.createObjectURL(file));
                 downloadLink.attr('target','_self');
                 downloadLink.attr('download', filename);

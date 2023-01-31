@@ -7,9 +7,14 @@ import java.time.LocalDateTime;
 
 
 @Entity
+@IdClass(RowID.class)
 @Table(name = "cdr")
 @Data
 public class RowEntity {
+
+    @Id
+    @Column(name = "uniqueid")
+    private String uniqueId;
 
     @Id
     @Column(name = "sequence")

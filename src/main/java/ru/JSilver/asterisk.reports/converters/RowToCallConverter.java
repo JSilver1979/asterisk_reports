@@ -24,6 +24,12 @@ public class RowToCallConverter {
         callItemDto.setRecordingFile(row.getRecordingFile());
         callItemDto.setCallWaitingTime(LocalTime.MIN.plusSeconds(row.getDuration()));
 
+        if(row.getLastApp().equals("Dial") && row.getDisposition().equals("ANSWERED")) {
+            callItemDto.setOperatorAnswerDuration(LocalTime.MIN.plusSeconds(row.getDuration()));
+            callItemDto.setOperatorAnswerTime(row.getCallDateTime().toLocalTime());
+            callItemDto.setOperatorAnswerDate(row.getCallDateTime().toLocalDate());
+        }
+
         return callItemDto;
     }
 
@@ -38,6 +44,9 @@ public class RowToCallConverter {
         if (callItemDto.getOperatorAnswerTime().isBefore(row.getCallDateTime().toLocalTime())) {
             callItemDto.setOperatorAnswerTime(row.getCallDateTime().toLocalTime());
         }
+        if (callItemDto.getRecordingFile() == null) {
+            callItemDto.setRecordingFile(row.getRecordingFile());
+        }
 
         callItemDto.setCallWaitingTime(LocalTime.MIN.plusSeconds(
                 callItemDto.getCallTime().until(
@@ -49,9 +58,6 @@ public class RowToCallConverter {
             callItemDto.setOperatorsGroup(row.getDst());
         }
 
-        if (callItemDto.getCallTime().isAfter(row.getCallDateTime().toLocalTime())) {
-            callItemDto.setCallTime(row.getCallDateTime().toLocalTime());
-        }
 
         if (row.getDisposition().equals("NO ANSWER")) {
             callItemDto.setFinalStatus(CallStatus.NO_ANSWER_BY_OPERATOR.getStatus());

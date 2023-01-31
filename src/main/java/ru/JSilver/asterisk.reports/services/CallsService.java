@@ -20,7 +20,7 @@ public class CallsService {
     private final RowToCallCollector callCollector;
 
     private List<RowEntity> getCalls(LocalDateTime dateFrom, LocalDateTime dateTo) {
-        return rowRepository.findAllByCallDateTimeBetween(dateFrom, dateTo);
+        return rowRepository.findAllByCallDateTimeBetweenOrderByCallDateTime(dateFrom, dateTo);
     }
 
     public List<CallItemDto> getCallItems(LocalDateTime dateFrom, LocalDateTime dateTo, String group) {

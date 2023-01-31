@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.JSilver.asterisk.reports.dto.CallItemDto;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.YearMonth;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +17,11 @@ import java.util.stream.Collectors;
 public class DownloadReportService {
     private final CallsService callsService;
 
-    public String getSomeData(String dateFrom, String dateTo, String group) {
-        LocalDateTime searchFromDate = LocalDateTime.parse(dateFrom + "T00:00:01", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        LocalDateTime searchToDate = LocalDateTime.parse(dateTo + "T23:59:59", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        List<CallItemDto> callItems = callsService.getCallItems(searchFromDate, searchToDate, group).stream()
+    public String getSomeData(int year, int month, String group) {
+        LocalDateTime searchFromDate = LocalDateTime.of(year,month,1,0,0,1);
+        LocalDateTime searchToDate = LocalDateTime.of(year,month, YearMonth.of(year,month).atEndOfMonth().getDayOfMonth(),23,59,59);
+        List<CallItemDto> callItems = callsService.getCallItems(searchFromDate, searchToDate, group)
+                .stream()
                 .sorted(Comparator.comparing(CallItemDto::getCallDate).thenComparing(CallItemDto::getCallTime))
                 .collect(Collectors.toList());
 
@@ -28,8 +29,7 @@ public class DownloadReportService {
         StringBuilder sb = new StringBuilder();
         sb.append(headers);
         for (CallItemDto item: callItems) {
-            sb.append(item.toString());
-            sb.append("\n");
+            sb.append(item.toString()).append("\n");
         }
         return sb.toString();
     }

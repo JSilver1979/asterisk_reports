@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="report.js"></script>
+    <script src="report_new.js"></script>
     <title>Сводная статистика звонков</title>
 </head>
 <body>
@@ -29,37 +29,43 @@
                 <li class="nav-item">
                     <a class="nav-link" href="reports.html">Выгрузка отчетов</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://10.1.5.105:8081/index.html" style="color: cornflowerblue">Старая бд</a>
+                </li>
             </ul>
         </div>
     </nav>
-    <h3>Выгрузка отчетов по звонкам</h3>
-    <h4>Выберите дату начала и дату окончания для отчета</h4>
+    <h3>Выгрузка ежемесячных отчетов</h3>
+<!--    <h5 style="color: #dc0101">Старая БД. Здесь данные только до 11.11.2022</h5>-->
+    <h4>Выберите год и месяц для формирования отчета</h4>
     <form ng-submit="downloadReports()">
         <div class="row form-group">
-            <label for="date" class="col-sm-1 col-form-label">Дата начала</label>
+            <label for="yearSelector">Отчетный год</label>
             <div class="col-sm-4">
-                <div class="input-group date" id="from" >
-                    <input type="text" class="form-control" ng-model="newReport.dateFrom">
-                    <span class="input-group-append">
-                            <span class="input-group-text bg-white">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </span>
-                </div>
+                <select class="form-control form-control-sm" ng-model="newReport.year" id="yearSelector">
+                    <option selected="selected" value="2022">2022</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+            <label for="monthSelector">Отчетный месяц</label>
+            <div class="col-sm-4">
+                <select class="form-control form-control-sm" ng-model="newReport.month" id="monthSelector">
+                    <option value="1">Январь</option>
+                    <option value="2">Февраль</option>
+                    <option value="3">Март</option>
+                    <option value="4">Апрель</option>
+                    <option selected="selected" value="5" >Май</option>
+                    <option value="6">Июнь</option>
+                    <option value="7">Июль</option>
+                    <option value="8">Август</option>
+                    <option value="9">Сентябрь</option>
+                    <option value="10">Октябрь</option>
+                    <option value="11">Ноябрь</option>
+                    <option value="12">Декабрь</option>
+                </select>
             </div>
         </div>
         <div class="row form-group">
-            <label for="date" class="col-sm-1 col-form-label">Дата окончания</label>
-            <div class="col-sm-4">
-                <div class="input-group date" id="to" >
-                    <input type="text" class="form-control" ng-model="newReport.dateTo">
-                    <span class="input-group-append">
-                            <span class="input-group-text bg-white">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </span>
-                </div>
-            </div>
             <label for="groupSelector">Номер группы</label>
             <div class="col-sm-4">
                 <select class="form-control form-control-sm" ng-model="newReport.group" id="groupSelector">
@@ -77,15 +83,6 @@
         </div>
         <button class="btn btn-warning" type="submit">Выгрузить отчет</button>
     </form>
-<script type="text/javascript">
-    $(function() {
-        $('#from').datepicker({
-            format: "yyyy-mm-dd"
-        });
-        $('#to').datepicker({
-            format: "yyyy-mm-dd"
-        });
-    });
-</script>
+</div>
 </body>
 </html>
