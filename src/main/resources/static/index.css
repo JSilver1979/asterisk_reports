@@ -20,3 +20,6 @@ audio {
     width: 150px;
     height: 30px;
 }
+td {
+    text-align: center;
+}

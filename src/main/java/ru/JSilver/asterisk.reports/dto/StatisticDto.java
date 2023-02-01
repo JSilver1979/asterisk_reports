@@ -2,19 +2,57 @@ package ru.JSilver.asterisk.reports.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class StatisticDto {
-    Integer answeredCount = 0;
-    Integer nonAnsweredByOperatorsCount = 0;
-    Integer nonAnsweredByQueueCount = 0;
-    Integer queuedDropCallsCount = 0;
-    Integer busyCallCount = 0;
-    Integer totalNonAnsweredCalls = 0;
-    Integer totalCalls = 0;
+    Integer answeredCount;
+    BigDecimal answeredCountAVG;
+    Integer nonAnsweredByOperatorsCount;
+    BigDecimal nonAnsweredByOperatorsCountAVG;
+    Integer nonAnsweredByQueueCount;
+    BigDecimal nonAnsweredByQueueCountAVG;
+    Integer queuedDropCallsCount;
+    Integer busyCallCount;
+    Integer totalNonAnsweredCalls;
+    BigDecimal totalNonAnsweredCallsAVG;
+    Integer totalCalls;
+    BigDecimal totalCallsAVG;
+    List<Integer> answeredHours;
+    List<BigDecimal> answeredHoursAVG;
+    List<Integer> nonAOperHours;
+    List<BigDecimal> nonAOperHoursAVG;
+    List<Integer> nonAQHours;
+    List<BigDecimal> nonAQHoursAVG;
+    List<Integer> totalNonAHours;
+    List<BigDecimal> totalNonAHoursAVG;
+    List<Integer> totalHours;
+    List<BigDecimal> totalHoursAVG;
+
+    public StatisticDto() {
+        answeredCount = 0;
+        nonAnsweredByOperatorsCount = 0;
+        nonAnsweredByQueueCount = 0;
+        queuedDropCallsCount = 0;
+        busyCallCount = 0;
+        totalNonAnsweredCalls = 0;
+        totalCalls = 0;
+        answeredHours = new ArrayList<>(Collections.nCopies(16,0));
+        answeredHoursAVG = new ArrayList<>();
+        nonAOperHours = new ArrayList<>(Collections.nCopies(16,0));
+        nonAOperHoursAVG = new ArrayList<>();
+        totalNonAHours = new ArrayList<>(Collections.nCopies(16,0));
+        totalNonAHoursAVG = new ArrayList<>();
+        totalHours = new ArrayList<>(Collections.nCopies(16,0));
+        totalHoursAVG = new ArrayList<>();
+        nonAQHours = new ArrayList<>(Collections.nCopies(16,0));
+        nonAQHoursAVG = new ArrayList<>();
+    }
 
     public void countNonAnsweredCalls() {
         totalNonAnsweredCalls = nonAnsweredByOperatorsCount
