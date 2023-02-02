@@ -40,7 +40,7 @@
     <h4>Выберите дату начала и дату окончания для отчета</h4>
     <form ng-submit="searchStats()">
         <div class="row form-group">
-            <label for="date" class="col-sm-1 col-form-label">Дата начала</label>
+            <label for="from" class="col-sm-1 col-form-label">Дата начала</label>
             <div class="col-sm-4">
                 <div class="input-group date" id="from" >
                     <input type="text" class="form-control" ng-model="newDate.dateFrom">
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="row form-group">
-            <label for="date" class="col-sm-1 col-form-label">Дата окончания</label>
+            <label for="to" class="col-sm-1 col-form-label">Дата окончания</label>
             <div class="col-sm-4">
                 <div class="input-group date" id="to" >
                     <input type="text" class="form-control" ng-model="newDate.dateTo">
@@ -74,6 +74,8 @@
                     <option value="1115">1115 - Department of Educational Programs</option>
                     <option value="1116">1116 - Department of Additional Profession</option>
                     <option value="1117">1117 - Department of Additional Profession</option>
+                    <option value="1118">1118 - Управление тех. сопровождения</option>
+                    <option value="1119">1119 - Отдел социальных проектов</option>
                     <option value="1120">1120 - Управление по подбору персонала</option>
                     <option value="1122">1122 - Секретариат Минская</option>
                 </select>

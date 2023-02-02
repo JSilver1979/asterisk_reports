@@ -57,20 +57,31 @@ public class RowToCallConverter {
         if (isCallGroup(row.getDst())) {
             callItemDto.setOperatorsGroup(row.getDst());
         }
-
-
-        if (row.getDisposition().equals("NO ANSWER")) {
-            callItemDto.setFinalStatus(CallStatus.NO_ANSWER_BY_OPERATOR.getStatus());
-
-        } else if (row.getDisposition().equals("ANSWERED")) {
-            callItemDto.setFinalStatus(CallStatus.ANSWERED.getStatus());
-            if(row.getLastApp().equals("Dial")) {
+        //TODO: разобраться с множественным вложением условий
+        if (callItemDto.getFinalStatus().equals(CallStatus.ANSWERED.getStatus())) {
+            if (row.getDisposition().equals("ANSWERED") && row.getLastApp().equals("Dial")) {
                 if(callItemDto.getOperatorAnswerDuration() == null) {
                     callItemDto.setOperatorAnswerDuration(
                             LocalTime.MIN.plusSeconds(row.getDuration()));
                 } else {
                     callItemDto.setOperatorAnswerDuration(
                             callItemDto.getOperatorAnswerDuration().plusSeconds(row.getDuration()));
+                }
+            }
+        } else {
+            if (row.getDisposition().equals("NO ANSWER")) {
+                callItemDto.setFinalStatus(CallStatus.NO_ANSWER_BY_OPERATOR.getStatus());
+
+            } else if (row.getDisposition().equals("ANSWERED")) {
+                callItemDto.setFinalStatus(CallStatus.ANSWERED.getStatus());
+                if(row.getLastApp().equals("Dial")) {
+                    if(callItemDto.getOperatorAnswerDuration() == null) {
+                        callItemDto.setOperatorAnswerDuration(
+                                LocalTime.MIN.plusSeconds(row.getDuration()));
+                    } else {
+                        callItemDto.setOperatorAnswerDuration(
+                                callItemDto.getOperatorAnswerDuration().plusSeconds(row.getDuration()));
+                    }
                 }
             }
         }
@@ -88,6 +99,8 @@ public class RowToCallConverter {
                 "1115",
                 "1116",
                 "1117",
+                "1118",
+                "1119",
                 "1120",
                 "1122"
         };
