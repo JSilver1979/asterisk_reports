@@ -1,6 +1,6 @@
 angular.module('app',[]).controller('indexController', function ($scope, $http) {
-    // const contextPath = 'http://localhost:8080'
-    const contextPath = 'http://10.1.5.105:8080'
+    const contextPath = 'http://localhost:8080'
+    // const contextPath = 'http://10.1.5.105:8080'
 
     $scope.search = function () {
         $http.post(contextPath + '/report/calls_search', $scope.newDate)
