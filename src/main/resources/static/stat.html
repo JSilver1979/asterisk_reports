@@ -13,6 +13,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="report_new.js"></script>
+    <script src="download.js"></script>
     <title>Сводная статистика звонков</title>
 </head>
 <body>
@@ -84,7 +85,8 @@
         <button class="btn btn-warning" type="submit">Поиск</button>
     </form>
     <h3>Отчет по звонкам в разрезе временных интервалов</h3>
-    <table class="table table-hover">
+    <button ng-if="Stats.totalCalls > 0" class="btn btn-secondary" onclick="exportTableToCSV('stat_report.csv', 'report1')">Скачать отчет</button>
+    <table class="report1 table table-hover">
         <tr style="font-weight: bold">
             <td>Время</td>
             <td>Отвечено</td>
@@ -107,185 +109,21 @@
             <td>{{Stats.waitTimeAVG}}</td>
             <td>{{Stats.talkTimeAVG}}</td>
         </tr>
-        <tr>
-            <td>До 08:00</td>
-            <td>{{Stats.answeredHours[0]}}</td>
-            <td>{{Stats.nonAQHours[0]}}</td>
-            <td>{{Stats.nonAOperHours[0]}}</td>
-            <td>{{Stats.totalNonAHours[0]}}</td>
-            <td>{{Stats.totalHours[0]}}</td>
-            <td>{{Stats.hourAnswerByPercent[0]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[0]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[0]}}</td>
-        </tr>
-        <tr>
-            <td>08:00 - 09:00</td>
-            <td>{{Stats.answeredHours[1]}}</td>
-            <td>{{Stats.nonAQHours[1]}}</td>
-            <td>{{Stats.nonAOperHours[1]}}</td>
-            <td>{{Stats.totalNonAHours[1]}}</td>
-            <td>{{Stats.totalHours[1]}}</td>
-            <td>{{Stats.hourAnswerByPercent[1]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[1]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[1]}}</td>
-        </tr>
-        <tr>
-            <td>09:00 - 10:00</td>
-            <td>{{Stats.answeredHours[2]}}</td>
-            <td>{{Stats.nonAQHours[2]}}</td>
-            <td>{{Stats.nonAOperHours[2]}}</td>
-            <td>{{Stats.totalNonAHours[2]}}</td>
-            <td>{{Stats.totalHours[2]}}</td>
-            <td>{{Stats.hourAnswerByPercent[2]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[2]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[2]}}</td>
-        </tr>
-        <tr>
-            <td>10:00 - 11:00</td>
-            <td>{{Stats.answeredHours[3]}}</td>
-            <td>{{Stats.nonAQHours[3]}}</td>
-            <td>{{Stats.nonAOperHours[3]}}</td>
-            <td>{{Stats.totalNonAHours[3]}}</td>
-            <td>{{Stats.totalHours[3]}}</td>
-            <td>{{Stats.hourAnswerByPercent[3]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[3]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[3]}}</td>
-        </tr>
-        <tr>
-            <td>11:00 - 12:00</td>
-            <td>{{Stats.answeredHours[4]}}</td>
-            <td>{{Stats.nonAQHours[4]}}</td>
-            <td>{{Stats.nonAOperHours[4]}}</td>
-            <td>{{Stats.totalNonAHours[4]}}</td>
-            <td>{{Stats.totalHours[4]}}</td>
-            <td>{{Stats.hourAnswerByPercent[4]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[4]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[4]}}</td>
-        </tr>
-        <tr>
-            <td>12:00 - 13:00</td>
-            <td>{{Stats.answeredHours[5]}}</td>
-            <td>{{Stats.nonAQHours[5]}}</td>
-            <td>{{Stats.nonAOperHours[5]}}</td>
-            <td>{{Stats.totalNonAHours[5]}}</td>
-            <td>{{Stats.totalHours[5]}}</td>
-            <td>{{Stats.hourAnswerByPercent[5]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[5]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[5]}}</td>
-        </tr>
-        <tr>
-            <td>13:00 - 14:00</td>
-            <td>{{Stats.answeredHours[6]}}</td>
-            <td>{{Stats.nonAQHours[6]}}</td>
-            <td>{{Stats.nonAOperHours[6]}}</td>
-            <td>{{Stats.totalNonAHours[6]}}</td>
-            <td>{{Stats.totalHours[6]}}</td>
-            <td>{{Stats.hourAnswerByPercent[6]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[6]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[6]}}</td>
-        </tr>
-        <tr>
-            <td>14:00 - 15:00</td>
-            <td>{{Stats.answeredHours[7]}}</td>
-            <td>{{Stats.nonAQHours[7]}}</td>
-            <td>{{Stats.nonAOperHours[7]}}</td>
-            <td>{{Stats.totalNonAHours[7]}}</td>
-            <td>{{Stats.totalHours[7]}}</td>
-            <td>{{Stats.hourAnswerByPercent[7]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[7]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[7]}}</td>
-        </tr>
-        <tr>
-            <td>15:00 - 16:00</td>
-            <td>{{Stats.answeredHours[8]}}</td>
-            <td>{{Stats.nonAQHours[8]}}</td>
-            <td>{{Stats.nonAOperHours[8]}}</td>
-            <td>{{Stats.totalNonAHours[8]}}</td>
-            <td>{{Stats.totalHours[8]}}</td>
-            <td>{{Stats.hourAnswerByPercent[8]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[8]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[8]}}</td>
-        </tr>
-        <tr>
-            <td>16:00 - 17:00</td>
-            <td>{{Stats.answeredHours[9]}}</td>
-            <td>{{Stats.nonAQHours[9]}}</td>
-            <td>{{Stats.nonAOperHours[9]}}</td>
-            <td>{{Stats.totalNonAHours[9]}}</td>
-            <td>{{Stats.totalHours[9]}}</td>
-            <td>{{Stats.hourAnswerByPercent[9]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[9]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[9]}}</td>
-        </tr>
-        <tr>
-            <td>17:00 - 18:00</td>
-            <td>{{Stats.answeredHours[10]}}</td>
-            <td>{{Stats.nonAQHours[10]}}</td>
-            <td>{{Stats.nonAOperHours[10]}}</td>
-            <td>{{Stats.totalNonAHours[10]}}</td>
-            <td>{{Stats.totalHours[10]}}</td>
-            <td>{{Stats.hourAnswerByPercent[10]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[10]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[10]}}</td>
-        </tr>
-        <tr>
-            <td>18:00 - 19:00</td>
-            <td>{{Stats.answeredHours[11]}}</td>
-            <td>{{Stats.nonAQHours[11]}}</td>
-            <td>{{Stats.nonAOperHours[11]}}</td>
-            <td>{{Stats.totalNonAHours[11]}}</td>
-            <td>{{Stats.totalHours[11]}}</td>
-            <td>{{Stats.hourAnswerByPercent[11]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[11]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[11]}}</td>
-        </tr>
-        <tr>
-            <td>19:00 - 20:00</td>
-            <td>{{Stats.answeredHours[12]}}</td>
-            <td>{{Stats.nonAQHours[12]}}</td>
-            <td>{{Stats.nonAOperHours[12]}}</td>
-            <td>{{Stats.totalNonAHours[12]}}</td>
-            <td>{{Stats.totalHours[12]}}</td>
-            <td>{{Stats.hourAnswerByPercent[12]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[12]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[12]}}</td>
-        </tr>
-        <tr>
-            <td>20:00 - 21:00</td>
-            <td>{{Stats.answeredHours[13]}}</td>
-            <td>{{Stats.nonAQHours[13]}}</td>
-            <td>{{Stats.nonAOperHours[13]}}</td>
-            <td>{{Stats.totalNonAHours[13]}}</td>
-            <td>{{Stats.totalHours[13]}}</td>
-            <td>{{Stats.hourAnswerByPercent[13]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[13]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[13]}}</td>
-        </tr>
-        <tr>
-            <td>21:00 - 22:00</td>
-            <td>{{Stats.answeredHours[14]}}</td>
-            <td>{{Stats.nonAQHours[14]}}</td>
-            <td>{{Stats.nonAOperHours[14]}}</td>
-            <td>{{Stats.totalNonAHours[14]}}</td>
-            <td>{{Stats.totalHours[14]}}</td>
-            <td>{{Stats.hourAnswerByPercent[14]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[14]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[14]}}</td>
-        </tr>
-        <tr>
-            <td>После 22:00</td>
-            <td>{{Stats.answeredHours[15]}}</td>
-            <td>{{Stats.nonAQHours[15]}}</td>
-            <td>{{Stats.nonAOperHours[15]}}</td>
-            <td>{{Stats.totalNonAHours[15]}}</td>
-            <td>{{Stats.totalHours[15]}}</td>
-            <td>{{Stats.hourAnswerByPercent[15]}}</td>
-            <td>{{Stats.hourWaitTimeAVG[15]}}</td>
-            <td>{{Stats.hourTalkTimeAVG[15]}}</td>
+        <tr ng-repeat="item in Stats.hourStats">
+            <td>{{item.hour}}</td>
+            <td>{{item.answered}}</td>
+            <td>{{item.naQueue}}</td>
+            <td>{{item.naOperator}}</td>
+            <td>{{item.naTotal}}</td>
+            <td>{{item.total}}</td>
+            <td>{{item.answeredPercent}}</td>
+            <td>{{item.waitTimeAVG}}</td>
+            <td>{{item.talkTimeAVG}}</td>
         </tr>
     </table>
     <h3>Отчет по среднему кол-ву звонков за день</h3>
-    <table class="table table-hover">
+    <button ng-if="Stats.totalCalls > 0" class="btn btn-secondary" onclick="exportTableToCSV('avg_report.csv', 'report2')">Скачать отчет</button>
+    <table class="report2 table table-hover">
         <tr style="font-weight: bold">
             <td>Время</td>
             <td>Отвечено</td>
@@ -302,133 +140,13 @@
             <td>{{Stats.totalNonAnsweredCallsAVG}}</td>
             <td>{{Stats.totalCallsAVG}}</td>
         </tr>
-        <tr>
-            <td>До 08:00</td>
-            <td>{{Stats.answeredHoursAVG[0]}}</td>
-            <td>{{Stats.nonAQHoursAVG[0]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[0]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[0]}}</td>
-            <td>{{Stats.totalHoursAVG[0]}}</td>
-        </tr>
-        <tr>
-            <td>08:00 - 09:00</td>
-            <td>{{Stats.answeredHoursAVG[1]}}</td>
-            <td>{{Stats.nonAQHoursAVG[1]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[1]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[1]}}</td>
-            <td>{{Stats.totalHoursAVG[1]}}</td>
-        </tr>
-        <tr>
-            <td>09:00 - 10:00</td>
-            <td>{{Stats.answeredHoursAVG[2]}}</td>
-            <td>{{Stats.nonAQHoursAVG[2]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[2]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[2]}}</td>
-            <td>{{Stats.totalHoursAVG[2]}}</td>
-        </tr>
-        <tr>
-            <td>10:00 - 11:00</td>
-            <td>{{Stats.answeredHoursAVG[3]}}</td>
-            <td>{{Stats.nonAQHoursAVG[3]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[3]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[3]}}</td>
-            <td>{{Stats.totalHoursAVG[3]}}</td>
-        </tr>
-        <tr>
-            <td>11:00 - 12:00</td>
-            <td>{{Stats.answeredHoursAVG[4]}}</td>
-            <td>{{Stats.nonAQHoursAVG[4]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[4]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[4]}}</td>
-            <td>{{Stats.totalHoursAVG[4]}}</td>
-        </tr>
-        <tr>
-            <td>12:00 - 13:00</td>
-            <td>{{Stats.answeredHoursAVG[5]}}</td>
-            <td>{{Stats.nonAQHoursAVG[5]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[5]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[5]}}</td>
-            <td>{{Stats.totalHoursAVG[5]}}</td>
-        </tr>
-        <tr>
-            <td>13:00 - 14:00</td>
-            <td>{{Stats.answeredHoursAVG[6]}}</td>
-            <td>{{Stats.nonAQHoursAVG[6]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[6]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[6]}}</td>
-            <td>{{Stats.totalHoursAVG[6]}}</td>
-        </tr>
-        <tr>
-            <td>14:00 - 15:00</td>
-            <td>{{Stats.answeredHoursAVG[7]}}</td>
-            <td>{{Stats.nonAQHoursAVG[7]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[7]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[7]}}</td>
-            <td>{{Stats.totalHoursAVG[7]}}</td>
-        </tr>
-        <tr>
-            <td>15:00 - 16:00</td>
-            <td>{{Stats.answeredHoursAVG[8]}}</td>
-            <td>{{Stats.nonAQHoursAVG[8]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[8]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[8]}}</td>
-            <td>{{Stats.totalHoursAVG[8]}}</td>
-        </tr>
-        <tr>
-            <td>16:00 - 17:00</td>
-            <td>{{Stats.answeredHoursAVG[9]}}</td>
-            <td>{{Stats.nonAQHoursAVG[9]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[9]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[9]}}</td>
-            <td>{{Stats.totalHoursAVG[9]}}</td>
-        </tr>
-        <tr>
-            <td>17:00 - 18:00</td>
-            <td>{{Stats.answeredHoursAVG[10]}}</td>
-            <td>{{Stats.nonAQHoursAVG[10]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[10]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[10]}}</td>
-            <td>{{Stats.totalHoursAVG[10]}}</td>
-        </tr>
-        <tr>
-            <td>18:00 - 19:00</td>
-            <td>{{Stats.answeredHoursAVG[11]}}</td>
-            <td>{{Stats.nonAQHoursAVG[11]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[11]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[11]}}</td>
-            <td>{{Stats.totalHoursAVG[11]}}</td>
-        </tr>
-        <tr>
-            <td>19:00 - 20:00</td>
-            <td>{{Stats.answeredHoursAVG[12]}}</td>
-            <td>{{Stats.nonAQHoursAVG[12]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[12]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[12]}}</td>
-            <td>{{Stats.totalHoursAVG[12]}}</td>
-        </tr>
-        <tr>
-            <td>20:00 - 21:00</td>
-            <td>{{Stats.answeredHoursAVG[13]}}</td>
-            <td>{{Stats.nonAQHoursAVG[13]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[13]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[13]}}</td>
-            <td>{{Stats.totalHoursAVG[13]}}</td>
-        </tr>
-        <tr>
-            <td>21:00 - 22:00</td>
-            <td>{{Stats.answeredHoursAVG[14]}}</td>
-            <td>{{Stats.nonAQHoursAVG[14]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[14]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[14]}}</td>
-            <td>{{Stats.totalHoursAVG[14]}}</td>
-        </tr>
-        <tr>
-            <td>После 22:00</td>
-            <td>{{Stats.answeredHoursAVG[15]}}</td>
-            <td>{{Stats.nonAQHoursAVG[15]}}</td>
-            <td>{{Stats.nonAOperHoursAVG[15]}}</td>
-            <td>{{Stats.totalNonAHoursAVG[15]}}</td>
-            <td>{{Stats.totalHoursAVG[15]}}</td>
+        <tr ng-repeat="item in Stats.hourStats">
+            <td>{{item.hour}}</td>
+            <td>{{item.answeredAVG}}</td>
+            <td>{{item.naQueueAVG}}</td>
+            <td>{{item.naOperatorAVG}}</td>
+            <td>{{item.naTotalAVG}}</td>
+            <td>{{item.totalAVG}}</td>
         </tr>
     </table>
 </div>

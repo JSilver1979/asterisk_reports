@@ -69,7 +69,7 @@ public class RowToCallConverter {
                 }
             }
         } else {
-            if (row.getDisposition().equals("NO ANSWER")) {
+            if (row.getDisposition().equals("NO ANSWER") || (row.getDisposition().equals("ANSWERED") && row.getLastApp().equals("Hangup"))) {
                 callItemDto.setFinalStatus(CallStatus.NO_ANSWER_BY_OPERATOR.getStatus());
 
             } else if (row.getDisposition().equals("ANSWERED")) {
