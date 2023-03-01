@@ -54,9 +54,6 @@ public class RowToCallConverter {
                         ChronoUnit.SECONDS
                 )));
 
-        if (isCallGroup(row.getDst())) {
-            callItemDto.setOperatorsGroup(row.getDst());
-        }
         //TODO: разобраться с множественным вложением условий
         if (callItemDto.getFinalStatus().equals(CallStatus.ANSWERED.getStatus())) {
             if (row.getDisposition().equals("ANSWERED") && row.getLastApp().equals("Dial")) {
@@ -87,29 +84,5 @@ public class RowToCallConverter {
         }
 
         return callItemDto;
-    }
-
-    private boolean isCallGroup(String callGroup) {
-        //TODO: remove hardcode
-        String[] groupArray = {
-                "1111",
-                "1112",
-                "1113",
-                "1114",
-                "1115",
-                "1116",
-                "1117",
-                "1118",
-                "1119",
-                "1120",
-                "1122"
-        };
-
-        for (String item: groupArray) {
-            if (item.equals(callGroup)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
