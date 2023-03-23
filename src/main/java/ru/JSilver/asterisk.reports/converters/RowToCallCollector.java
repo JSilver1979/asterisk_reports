@@ -35,7 +35,8 @@ public class RowToCallCollector {
 
         return callMap.values().stream()
                 .filter(callItemDto -> callItemDto.getOperatorsGroup().equals(group))
-                .sorted(Comparator.comparing(CallItemDto::getSequence))
+                .sorted(Comparator.comparing(CallItemDto::getCallDate))
+                .sorted(Comparator.comparing(CallItemDto::getCallTime))
                 .collect(Collectors.toList());
     }
 }
