@@ -31,9 +31,17 @@ public class QueueMap {
             if (pairs.getKey().equals(number))
                 return pairs.getKey();
              else if (pairs.getValue().contains(number)) {
-                return pairs.getKey();
+                return prioritize(pairs.getKey());
             }
         }
         return number;
+    }
+
+    private String prioritize(String key) {
+        String similarQueues = "1112,1120,1121";
+        if (similarQueues.contains(key)) {
+            return "1112";
+        }
+        return key;
     }
 }

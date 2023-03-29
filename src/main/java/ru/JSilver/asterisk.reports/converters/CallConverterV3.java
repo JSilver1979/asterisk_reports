@@ -60,7 +60,7 @@ public class CallConverterV3 {
         item.setTimeStart(row.getCallDateTime().toLocalTime());
         item.setQueue(queueMap.getQueue(null, row.getDst()));
         item.setTimeWait(LocalTime.MIN.plusSeconds(row.getDuration()));
-        item.setQueueStatus(CallStatus.NO_ANSWER_BY_QUEUE.getStatus());
+        item.setQueueStatus(addNewStatus(row));
 
         return item;
     }
@@ -115,6 +115,13 @@ public class CallConverterV3 {
                 item.setAgent(row.getDst());
             }
         }
+    }
+
+    private String addNewStatus (RowEntity row) {
+        if (isAnswered(row)) {
+            return CallStatus.ANSWERED.getStatus();
+        }
+        return CallStatus.NO_ANSWER_BY_QUEUE.getStatus();
     }
 
     private boolean isHangUp (RowEntity row) {
