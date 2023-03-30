@@ -62,6 +62,16 @@ public class CallConverterV3 {
         item.setTimeWait(LocalTime.MIN.plusSeconds(row.getDuration()));
         item.setQueueStatus(addNewStatus(row));
 
+        if (isAnswered(row)) {
+            item.setAgent(row.getDst());
+            updateAnswerTime(item, row);
+            item.setTimeWait(LocalTime.MIN.plusSeconds(
+                    item.getTimeStart().until(item.getAgentAnswerTime(), ChronoUnit.SECONDS)
+            ));
+            item.setAgentAnswerDuration(LocalTime.MIN.plusSeconds(row.getDuration()));
+
+        }
+
         return item;
     }
 

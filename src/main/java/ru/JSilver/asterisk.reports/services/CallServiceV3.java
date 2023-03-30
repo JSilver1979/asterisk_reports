@@ -80,6 +80,68 @@ public class CallServiceV3 {
             }
         }
 
-        return detailedList;
+        return fixDuplicates(detailedList);
     }
+
+    private List<CallQueueDto> fixDuplicates(List<CallQueueDto> detailedList) {
+        List<CallQueueDto> fixedList = new ArrayList<>();
+
+        for (int i = 0; i < detailedList.size(); i++) {
+            fixedList.add(checkDuplicates(detailedList.get(i), detailedList));
+        }
+        return fixedList;
+    }
+
+    private CallQueueDto checkDuplicates(CallQueueDto firstItem, List<CallQueueDto> list) {
+        for (int i = 0; i < list.size(); i++) {
+            CallQueueDto secondItem = list.get(i);
+            if (!secondItem.getCallId().equals(firstItem.getCallId())
+                    && secondItem.getNumber().equals(firstItem.getNumber())
+                    && secondItem.getCallTime().isBefore(firstItem.getQueueTime())) {
+                CallQueueDto mergedItem;
+                if (firstIsMainItem(firstItem, secondItem)) {
+                    mergedItem = mergeItems(firstItem, secondItem);
+                    list.remove(secondItem);
+                } else {
+                    mergedItem = mergeItems(secondItem, firstItem);
+                    list.remove(firstItem);
+                }
+                return mergedItem;
+            }
+        }
+        return firstItem;
+    }
+
+    private CallQueueDto mergeItems(CallQueueDto mainItem, CallQueueDto childItem) {
+        CallQueueDto mergedItem = new CallQueueDto();
+
+        mergedItem.setCallId(mainItem.getCallId());
+        mergedItem.setNumber(mainItem.getNumber());
+        mergedItem.setDate(mainItem.getDate());
+        mergedItem.setCallTime(mainItem.getCallTime());
+        mergedItem.setQueueTime(childItem.getQueueTime());
+        mergedItem.setWaitTime(childItem.getWaitTime());
+        mergedItem.setAgentNumber(childItem.getAgentNumber());
+        mergedItem.setAnswerTime(childItem.getAnswerTime());
+        mergedItem.setAnswerDuration(childItem.getAnswerDuration());
+        mergedItem.setCallStatus(mainItem.getCallStatus());
+        mergedItem.setQueueStatus(childItem.getQueueStatus());
+        mergedItem.setAudioPath(mainItem.getAudioPath());
+        mergedItem.setRedirected(mainItem.isRedirected());
+
+        return mergedItem;
+    }
+
+    private boolean firstIsMainItem(CallQueueDto first, CallQueueDto second) {
+        if (stringToInt(first.getCallId()) < stringToInt(second.getCallId())) {
+            return true;
+        }
+        return false;
+    }
+
+    private Integer stringToInt(String string) {
+        String[] arr = string.split("\\.");
+        return Integer.parseInt(arr[0]);
+    }
+
 }
