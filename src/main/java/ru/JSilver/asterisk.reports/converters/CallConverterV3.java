@@ -30,6 +30,11 @@ public class CallConverterV3 {
         call.setStatus("NO ANSWER");
         call.setAudioPath(row.getRecordingFile());
 
+        if (isAnswered(row)) {
+            call.setStatus("ANSWERED");
+            call.setAudioPath(row.getRecordingFile());
+        }
+
         List<QueueItem> historyList = new ArrayList<>();
         historyList.add(addHistory(row));
         call.setHistoryList(historyList);
@@ -46,7 +51,7 @@ public class CallConverterV3 {
             call.setStatus(CallStatus.ANSWERED.getStatus());
         }
 
-        if (call.getAudioPath() == null) {
+        if (call.getAudioPath() == null || call.getAudioPath().isBlank()) {
             call.setAudioPath(row.getRecordingFile());
         }
 
