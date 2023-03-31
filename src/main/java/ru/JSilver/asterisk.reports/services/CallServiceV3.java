@@ -1,6 +1,7 @@
 package ru.JSilver.asterisk.reports.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.JSilver.asterisk.reports.converters.RowToCallCollectorV3;
 import ru.JSilver.asterisk.reports.data.RowEntity;
@@ -10,11 +11,12 @@ import ru.JSilver.asterisk.reports.dto.QueueItem;
 import ru.JSilver.asterisk.reports.repos.RawRowRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CallServiceV3 {
     private final RawRowRepository repository;
 
@@ -26,22 +28,6 @@ public class CallServiceV3 {
 
     private List<RowEntity> getRows(LocalDateTime dateFrom, LocalDateTime dateTo) {
         return repository.findAllByCallDateTimeBetweenOrderByCallDateTime(dateFrom, dateTo);
-    }
-
-    public List<QueueItem> getQueueItems(LocalDateTime dateFrom, LocalDateTime dateTo, String queue) {
-        List<QueueItem> queueItems = new ArrayList<>();
-        List<CallItemDtoV3> calls = getCallItems(dateFrom, dateTo, queue);
-        for (int i = 0; i < calls.size(); i++) {
-            CallItemDtoV3 call = calls.get(i);
-            List<QueueItem> callHistory = call.getHistoryList();
-            for (int j = 0; j < callHistory.size() ; j++) {
-                QueueItem item = callHistory.get(j);
-                if (item.getQueue().equals(queue)) {
-                    queueItems.add(item);
-                }
-            }
-        }
-        return queueItems;
     }
 
     public List<CallQueueDto> getDetailedCalls(LocalDateTime dateFrom, LocalDateTime dateTo, String queue) {
@@ -84,38 +70,51 @@ public class CallServiceV3 {
     }
 
     private List<CallQueueDto> fixDuplicates(List<CallQueueDto> detailedList) {
-        List<CallQueueDto> fixedList = new ArrayList<>();
+        Map<String, CallQueueDto> fixedMap = new HashMap<>();
 
         for (int i = 0; i < detailedList.size(); i++) {
-            fixedList.add(checkDuplicates(detailedList.get(i), detailedList));
+            CallQueueDto item = checkDuplicates(detailedList.get(i), detailedList);
+            fixedMap.put(item.getCallId(), item);
         }
-        return fixedList;
+        return fixedMap.values().stream()
+                .sorted(Comparator.comparing(CallQueueDto::getCallTime))
+                .collect(Collectors.toList());
     }
 
     private CallQueueDto checkDuplicates(CallQueueDto firstItem, List<CallQueueDto> list) {
         for (int i = 0; i < list.size(); i++) {
             CallQueueDto secondItem = list.get(i);
-            if (!secondItem.getCallId().equals(firstItem.getCallId())
-                    && secondItem.getNumber().equals(firstItem.getNumber())
-                    && secondItem.getCallTime().isBefore(firstItem.getQueueTime())) {
-                CallQueueDto mergedItem;
+            if (isMergedCall(firstItem, secondItem)) {
                 if (firstIsMainItem(firstItem, secondItem)) {
-                    mergedItem = mergeItems(firstItem, secondItem);
+                    CallQueueDto mergedItem = mergeItems(firstItem, secondItem);
                     list.remove(secondItem);
+                    return mergedItem;
                 } else {
-                    mergedItem = mergeItems(secondItem, firstItem);
-                    list.remove(firstItem);
+                    CallQueueDto mergedItem = mergeItems(firstItem, secondItem);
+                    list.remove(secondItem);
+                    return mergedItem;
                 }
-                return mergedItem;
             }
+
         }
         return firstItem;
+    }
+
+    private boolean isMergedCall(CallQueueDto firstItem, CallQueueDto secondItem) {
+        if (firstItem.getCallId().equals(secondItem.getCallId())) return false;
+
+        if (firstItem.getNumber().equals(secondItem.getNumber()))
+            if ((firstItem.getQueueTime().plusSeconds(firstItem.getWaitTime().getSecond()).isAfter(secondItem.getCallTime()) || firstItem.getQueueTime().equals(secondItem.getCallTime()))
+                    && (firstItem.getCallTime().isBefore(secondItem.getCallTime()) || firstItem.getQueueTime().equals(secondItem.getCallTime()))) {
+                return true;
+            }
+        return false;
     }
 
     private CallQueueDto mergeItems(CallQueueDto mainItem, CallQueueDto childItem) {
         CallQueueDto mergedItem = new CallQueueDto();
 
-        mergedItem.setCallId(mainItem.getCallId());
+        mergedItem.setCallId(childItem.getCallId());
         mergedItem.setNumber(mainItem.getNumber());
         mergedItem.setDate(mainItem.getDate());
         mergedItem.setCallTime(mainItem.getCallTime());
@@ -124,24 +123,23 @@ public class CallServiceV3 {
         mergedItem.setAgentNumber(childItem.getAgentNumber());
         mergedItem.setAnswerTime(childItem.getAnswerTime());
         mergedItem.setAnswerDuration(childItem.getAnswerDuration());
-        mergedItem.setCallStatus(mainItem.getCallStatus());
+        mergedItem.setCallStatus(childItem.getQueueStatus());
         mergedItem.setQueueStatus(childItem.getQueueStatus());
-        mergedItem.setAudioPath(mainItem.getAudioPath());
+        if (mainItem.getAudioPath() == null || mainItem.getAudioPath().isEmpty()) {
+            mergedItem.setAudioPath(childItem.getAudioPath());
+        } else {
+            mergedItem.setAudioPath(mainItem.getAudioPath());
+        }
+
         mergedItem.setRedirected(mainItem.isRedirected());
 
         return mergedItem;
     }
 
     private boolean firstIsMainItem(CallQueueDto first, CallQueueDto second) {
-        if (stringToInt(first.getCallId()) < stringToInt(second.getCallId())) {
+        if (first.getCallTime().isBefore(second.getCallTime())) {
             return true;
         }
         return false;
     }
-
-    private Integer stringToInt(String string) {
-        String[] arr = string.split("\\.");
-        return Integer.parseInt(arr[0]);
-    }
-
 }
