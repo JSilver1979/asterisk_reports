@@ -18,10 +18,18 @@ import java.time.format.DateTimeFormatter;
 public class StatisticController {
     private final StatisticService statisticService;
 
+
     @PostMapping("/v2")
     public StatisticDto getNewStats(@RequestBody DateSearchDto searchDto) {
         LocalDateTime searchFromDate = LocalDateTime.parse(searchDto.getDateFrom() + "T00:00:01", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         LocalDateTime searchToDate = LocalDateTime.parse(searchDto.getDateTo() + "T23:59:59", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return statisticService.getTrueStats(searchFromDate, searchToDate, searchDto.getGroup());
+    }
+
+    @PostMapping("/v3")
+    public StatisticDto getDetailedStats(@RequestBody DateSearchDto searchDto) {
+        LocalDateTime searchFromDate = LocalDateTime.parse(searchDto.getDateFrom() + "T00:00:01", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime searchToDate = LocalDateTime.parse(searchDto.getDateTo() + "T23:59:59", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        return statisticService.getDetailedStats(searchFromDate, searchToDate, searchDto.getGroup());
     }
 }

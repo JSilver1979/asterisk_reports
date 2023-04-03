@@ -15,6 +15,9 @@ public class HoursStatDto {
     private BigDecimal naOperatorAVG;
     private Integer naQueue;
     private BigDecimal naQueueAVG;
+
+    private Integer busyQueue;
+    private BigDecimal busyQueueAVG;
     private Integer naTotal;
     private BigDecimal naTotalAVG;
     private Integer total;
@@ -26,6 +29,7 @@ public class HoursStatDto {
         this.answered = 0;
         this.naOperator = 0;
         this.naQueue = 0;
+        this.busyQueue = 0;
         this.naTotal = 0;
         this.total = 0;
     }
